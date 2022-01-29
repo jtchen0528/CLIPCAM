@@ -5,4 +5,3 @@ train_action_classifier.py
 *__pycache__
 /checkpoints
 checkpoints.zip
-app.py
