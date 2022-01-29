@@ -15,7 +15,6 @@
   <meta property="og:description" content="CLIPCAM project page">
 
   <link rel="icon" href="/favicon.ico">
-
   <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
 
 </head>
@@ -23,9 +22,24 @@
 <body>
   <!-- your content here... -->
 
-  
+  <h1>File Upload</h1>
+  <form id="single-form" enctype="multipart/form-data">
+    <p><input type="file" name="file"></p>
+    <button type="button" id='single'>Submit</button>
+  </form>
 
+  <h1>File Upload</h1>
+  <form id="grid-form" enctype="multipart/form-data">
+    <p><input type="file" name="file1" id='grid-file-1'></p>
+    <p><input type="file" name="file2" id='grid-file-2'></p>
+    <p><input type="file" name="file3" id='grid-file-3'></p>
+    <p><input type="file" name="file4" id='grid-file-4'></p>
+    <button type="button" id='grid'>Submit</button>
+  </form>
 
-  <script src="js/main.js"></script>
+  <img id="result">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="{{ url_for('static',filename='js/main.js') }}"></script>
 </body>
 </html>

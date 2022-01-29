@@ -1,29 +1,63 @@
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, render_template, redirect, url_for, send_file
 import numpy as np
 import cv2
 import jsonpickle
+from clipcam import api
+from PIL import Image
+import os
+from werkzeug.utils import secure_filename
+import io
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
+app.config['UPLOAD_PATH'] = 'uploads'
 
+@app.errorhandler(413)
+def too_large(e):
+    return "File is too large", 413
 
 @app.route('/')
-def hello():
+def index():
     return render_template('index.html')
 
-@app.route('/api/grid', methods=['POST'])
+@app.route('/single', methods=['POST'])
+def single():
+    uploaded_file = request.files['file']
+    img = Image.open(uploaded_file.stream)
+
+    filename = secure_filename(uploaded_file.filename)
+    if filename != '':
+        file_ext = os.path.splitext(filename)[1]
+        if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+            return "Invalid image", 400
+        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+
+    final_img = api('ViT-B/16', 'GradCAM', [img], 'white trunks')
+
+    file_object = io.BytesIO()
+    final_img.save(file_object, 'PNG')
+    file_object.seek(0)
+
+    return send_file(file_object, mimetype='image/PNG')
+
+@app.route('/grid', methods=['POST'])
 def grid():
-    r = request
-    # convert string of image data to uint8
-    nparr = np.fromstring(r.data, np.uint8)
-    # decode image
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    uploaded_file_1 = request.files['file1']
+    uploaded_file_2 = request.files['file2']
+    uploaded_file_3 = request.files['file3']
+    uploaded_file_4 = request.files['file4']
+    img_1 = Image.open(uploaded_file_1.stream)
+    img_2 = Image.open(uploaded_file_2.stream)
+    img_3 = Image.open(uploaded_file_3.stream)
+    img_4 = Image.open(uploaded_file_4.stream)
+    final_img = api('ViT-B/16', 'GradCAM', [img_1, img_2, img_3, img_4], 'white trunks')
 
-    response = {'message': 'image received. size={}x{}'.format(img.shape[1], img.shape[0])
-                }
+    file_object = io.BytesIO()
+    final_img.save(file_object, 'PNG')
+    file_object.seek(0)
 
-    response_pickled = jsonpickle.encode(response)
-
-    return Response(response=response_pickled, status=200, mimetype="application/json")
+    return send_file(file_object, mimetype='image/PNG')
 
 if __name__ == 'main':
     app.run() #啟動伺服器

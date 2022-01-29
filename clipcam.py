@@ -1,17 +1,8 @@
 import clip_modified
 import torch
-from PIL import Image, ImageDraw
+from PIL import Image
 import numpy as np
-import matplotlib.pyplot as plt
-import os
-from matplotlib import patches as mtp_ptch
-from torchvision import transforms
-from tqdm.notebook import tqdm
 import argparse
-import cv2
-import pandas as pd
-import json
-import sys
 
 from utils.model import getCLIP, getCAM
 from utils.preprocess import getImageTranform
@@ -21,27 +12,14 @@ from utils.evaluation_tools import *
 from utils.preprocess import getAttacker
 from utils.grid_utils import *
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--clip_model_name", type=str,
-                    default='ViT-B/16', help="Model name of CLIP")
-parser.add_argument("--cam_model_name", type=str,
-                    default='GradCAM', help="Model name of GradCAM")
-parser.add_argument("--attack", type=str, default=None,
-                    help="attack type: \"snow\", \"fog\"")
-args = parser.parse_args()
-
 GPU_ID = 'cpu'
-CLIP_MODEL_NAME = args.clip_model_name
-CAM_MODEL_NAME = args.cam_model_name
 RESIZE = 1
-ATTACK = args.attack
 DISTILL_NUM = 0
-
 
 ImageTransform = getImageTranform(resize=RESIZE)
 originalTransform = getImageTranform(resize=RESIZE, normalized=False)
 
-def api(CLIP_MODEL_NAME, CAM_MODEL_NAME, image_path, sentence):
+def api(CLIP_MODEL_NAME, CAM_MODEL_NAME, images, sentence):
     model, target_layer, reshape_transform = getCLIP(
         model_name=CLIP_MODEL_NAME, gpu_id=GPU_ID)
 
@@ -50,15 +28,14 @@ def api(CLIP_MODEL_NAME, CAM_MODEL_NAME, image_path, sentence):
 
     MASK_THRESHOLD = get_mask_threshold(CLIP_MODEL_NAME)
 
-    if len(image_path) == 4:
-        final_img = get_clipcam_grid(cam, model, MASK_THRESHOLD, image_path, sentence)
-    elif len(image_path) == 1:
-        final_img = get_clipcam_single(cam, model, MASK_THRESHOLD, image_path[0], sentence)
+    if len(images) == 4:
+        final_img = get_clipcam_grid(cam, model, MASK_THRESHOLD, images, sentence)
+    elif len(images) == 1:
+        final_img = get_clipcam_single(cam, model, MASK_THRESHOLD, images[0], sentence)
     
-    final_img.save('img.png')
-
     del model
     del cam
+    return final_img
 
 def get_mask_threshold(CLIP_MODEL_NAME):
     if CLIP_MODEL_NAME == 'RN50':
@@ -71,8 +48,8 @@ def get_mask_threshold(CLIP_MODEL_NAME):
         MASK_THRESHOLD = 0.3
     return MASK_THRESHOLD
 
-def get_clipcam_single(clipcam, model, MASK_THRESHOLD, image_path, sentence = None, DISTILL_NUM = 0, ATTACK = None):
-    image = Image.open(image_path)
+def get_clipcam_single(clipcam, model, MASK_THRESHOLD, image, sentence = None, DISTILL_NUM = 0, ATTACK = None):
+    image = image
     orig_image = image
     if ATTACK is not None:
         image = image.resize((224, 224))
@@ -106,10 +83,10 @@ def get_clipcam_single(clipcam, model, MASK_THRESHOLD, image_path, sentence = No
     final_img = getHeatMapOneBBox(grayscale_cam, orig_image.permute(1, 2, 0).cpu().numpy(), pred_bbox, sentence)
     return final_img
 
-def get_clipcam_grid(clipcam, model, MASK_THRESHOLD, image_paths, sentence = None, DISTILL_NUM = 0, ATTACK = None):
+def get_clipcam_grid(clipcam, model, MASK_THRESHOLD, images, sentence = None, DISTILL_NUM = 0, ATTACK = None):
     grid = []
     for i in range(4):
-        image = Image.open(image_paths[i])
+        image = images[i]
         image = image.resize((224, 224))
         grid.append(image)
         
@@ -159,6 +136,3 @@ def get_clipcam_grid(clipcam, model, MASK_THRESHOLD, image_paths, sentence = Non
 
     final_img = getHeatMapOneBBox(grayscale_cam, orig_image.permute(1, 2, 0).cpu().numpy(), total_bboxes, sentence, size=448)
     return final_img
-
-api('ViT-B/16', 'GradCAM', ['test_img.jpg', 'test_img.jpg', 'test_img.jpg', 'test_img.jpg'], 'white trunks')
-api('ViT-B/32', 'GradCAM', ['test_img.jpg'], 'white trunks')
