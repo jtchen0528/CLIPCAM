@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, send_file
 import numpy as np
 import cv2
-import jsonpickle
 from clipcam import api
 from PIL import Image
 import os
@@ -11,7 +10,6 @@ import io
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
-app.config['UPLOAD_PATH'] = 'uploads'
 
 @app.errorhandler(413)
 def too_large(e):
@@ -31,7 +29,6 @@ def single():
         file_ext = os.path.splitext(filename)[1]
         if file_ext not in app.config['UPLOAD_EXTENSIONS']:
             return "Invalid image", 400
-        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
 
     final_img = api('ViT-B/16', 'GradCAM', [img], 'white trunks')
 
