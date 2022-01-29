@@ -25,6 +25,37 @@
   <h1>File Upload</h1>
   <form id="single-form" enctype="multipart/form-data">
     <p><input type="file" name="file"></p>
+    <p><label for="text">Guiding Text:</label>
+    <input type="text" id="guiding_text" name="guiding_text"></p>
+    <p><label for="clip_model_name">Choose CLIPCAM backbone:</label>
+    <select id="clip_model_name" name="clip_model_name">
+      <option value="ViT-B/16">ViT-B/16</option>
+      <option value="ViT-B/32">ViT-B/32</option>
+      <option value="RN50">RN50</option>
+      <option value="RN101">RN101</option>
+    </select></p>
+    <p><label for="cam_model_name">Choose CAM Type:</label>
+    <select id="cam_model_name" name="cam_model_name">
+      <option value="GradCAM">GradCAM</option>
+      <option value="GradCAMPlusPlus">GradCAM++</option>
+      <option value="XGradCAM">XGradCAM</option>
+      <option value="ScoreCAM">ScoreCAM</option>
+      <option value="EigenCAM">EigenCAM</option>
+      <option value="EigenGradCAM">EigenGradCAM</option>
+      <option value="LayerCAM">LayerCAM</option>
+    </select></p>
+    <p><label for="attack">Weather Attack:</label>
+    <select id="attack" name="attack">
+      <option value="None">None</option>
+      <option value="fog">Fog</option>
+      <option value="snow">Snow</option>
+    </select></p>
+    <p><label for="distill_num">Iterative Mask:</label>
+    <select id="distill_num" name="distill_num">
+      <option value=0>0</option>
+      <option value=1>1</option>
+      <option value=2>2</option>
+    </select></p>
     <button type="button" id='single'>Submit</button>
   </form>
 
@@ -34,6 +65,37 @@
     <p><input type="file" name="file2" id='grid-file-2'></p>
     <p><input type="file" name="file3" id='grid-file-3'></p>
     <p><input type="file" name="file4" id='grid-file-4'></p>
+    <p><label for="text">Guiding Text:</label>
+      <input type="text" id="guiding_text" name="guiding_text"></p>
+      <p><label for="clip_model_name">Choose CLIPCAM backbone:</label>
+      <select id="clip_model_name" name="clip_model_name">
+        <option value="ViT-B/16">ViT-B/16</option>
+        <option value="ViT-B/32">ViT-B/32</option>
+        <option value="RN50">RN50</option>
+        <option value="RN101">RN101</option>
+      </select></p>
+      <p><label for="cam_model_name">Choose CAM Type:</label>
+      <select id="cam_model_name" name="cam_model_name">
+        <option value="GradCAM">GradCAM</option>
+        <option value="GradCAMPlusPlus">GradCAM++</option>
+        <option value="XGradCAM">XGradCAM</option>
+        <option value="ScoreCAM">ScoreCAM</option>
+        <option value="EigenCAM">EigenCAM</option>
+        <option value="EigenGradCAM">EigenGradCAM</option>
+        <option value="LayerCAM">LayerCAM</option>
+      </select></p>
+      <p><label for="attack">Weather Attack:</label>
+      <select id="attack" name="attack">
+        <option value="None">None</option>
+        <option value="fog">Fog</option>
+        <option value="snow">Snow</option>
+      </select></p>
+      <p><label for="distill_num">Iterative Mask:</label>
+      <select id="distill_num" name="distill_num">
+        <option value=0>0</option>
+        <option value=1>1</option>
+        <option value=2>2</option>
+      </select></p>
     <button type="button" id='grid'>Submit</button>
   </form>
 

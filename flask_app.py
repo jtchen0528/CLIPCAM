@@ -22,6 +22,16 @@ def index():
 @app.route('/single', methods=['POST'])
 def single():
     uploaded_file = request.files['file']
+    CLIP_MODEL_NAME = request.form['clip_model_name']
+    CAM_MODEL_NAME = request.form['cam_model_name']
+    GUIDING_TEXT = request.form['guiding_text']
+    ATTACK = request.form['attack']
+    DISTILL_NUM = request.form['distill_num']
+
+    if ATTACK == 'None':
+        ATTACK = None
+    DISTILL_NUM = int(DISTILL_NUM)
+
     img = Image.open(uploaded_file.stream)
 
     filename = secure_filename(uploaded_file.filename)
@@ -30,7 +40,7 @@ def single():
         if file_ext not in app.config['UPLOAD_EXTENSIONS']:
             return "Invalid image", 400
 
-    final_img = api('ViT-B/16', 'GradCAM', [img], 'white trunks')
+    final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img], GUIDING_TEXT, DISTILL_NUM, ATTACK)
 
     file_object = io.BytesIO()
     final_img.save(file_object, 'PNG')
@@ -44,11 +54,21 @@ def grid():
     uploaded_file_2 = request.files['file2']
     uploaded_file_3 = request.files['file3']
     uploaded_file_4 = request.files['file4']
+    CLIP_MODEL_NAME = request.form['clip_model_name']
+    CAM_MODEL_NAME = request.form['cam_model_name']
+    GUIDING_TEXT = request.form['guiding_text']
+    ATTACK = request.form['attack']
+    DISTILL_NUM = request.form['distill_num']
+
+    if ATTACK == 'None':
+        ATTACK = None
+    DISTILL_NUM = int(DISTILL_NUM)
+
     img_1 = Image.open(uploaded_file_1.stream)
     img_2 = Image.open(uploaded_file_2.stream)
     img_3 = Image.open(uploaded_file_3.stream)
     img_4 = Image.open(uploaded_file_4.stream)
-    final_img = api('ViT-B/16', 'GradCAM', [img_1, img_2, img_3, img_4], 'white trunks')
+    final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img_1, img_2, img_3, img_4], GUIDING_TEXT, DISTILL_NUM, ATTACK)
 
     file_object = io.BytesIO()
     final_img.save(file_object, 'PNG')
