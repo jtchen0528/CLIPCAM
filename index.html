@@ -47,21 +47,21 @@
                         <h3>Grid-view evaluation</h3>
                         <form id="grid-form" enctype="multipart/form-data">
                             <div class="mb-3 row">
-                                <label for="file" class="col-sm-12  col-form-label">Input Image:</label>
+                                <div class="col-sm-12  col-form-label">Input Image:</div>
                                 <div class="custom-file col-sm-6">
-                                    <input type="file" class="custom-file-input" id="file" name="file1">
+                                    <input type="file" class="custom-file-input" id="file1" name="file1">
                                     <label class="custom-file-label" for="file1">Choose Image file 1</label>
                                 </div>
                                 <div class="custom-file col-sm-6">
-                                    <input type="file" class="custom-file-input" id="file" name="file2">
+                                    <input type="file" class="custom-file-input" id="file2" name="file2">
                                     <label class="custom-file-label" for="file2">Choose Image file 2</label>
                                 </div>
                                 <div class="custom-file col-sm-6">
-                                    <input type="file" class="custom-file-input" id="file" name="file3">
+                                    <input type="file" class="custom-file-input" id="file3" name="file3">
                                     <label class="custom-file-label" for="file3">Choose Image file 3</label>
                                 </div>
                                 <div class="custom-file col-sm-6">
-                                    <input type="file" class="custom-file-input" id="file" name="file4">
+                                    <input type="file" class="custom-file-input" id="file4" name="file4">
                                     <label class="custom-file-label" for="file4">Choose Image file 4</label>
                                 </div>
                             </div>
@@ -120,12 +120,13 @@
                         <h3>Single-Image evaluation</h3>
                         <form id="single-form" enctype="multipart/form-data">
                             <div class="mb-3 row">
-                                <label for="file" class="col-sm-2  col-form-label">Input Image:</label>
+                                <div class="col-sm-12  col-form-label">Input Image:</div>
                                 <div class="custom-file col-sm-10">
                                     <input type="file" class="custom-file-input" id="file" name="file">
-                                    <label class="custom-file-label" for="file">Choose Image file</label>
+                                    <label class="custom-file-label" for="file">Choose Input Image </label>
                                 </div>
                             </div>
+
                             <div class="mb-3 row">
                                 <label for="guiding_text" class="col-sm-2  col-form-label">Guiding Text:</label>
                                 <input type="text" class="form-control  col-sm-10" id="guiding_text"
@@ -181,7 +182,6 @@
             </div>
         </div>
     </div>
-
     <img id="result">
 
     <div id="alertBox"></div>

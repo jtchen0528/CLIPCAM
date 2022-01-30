@@ -43,3 +43,42 @@ function addAlert(content, type) {
 
     timeout = setTimeout(() => { $(`.JobAdded`).alert('close') }, 3000);
 }
+
+
+
+$('#file').on('change',function(){
+    //get the file name
+    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+})
+
+$('#file1').on('change',function(){
+    //get the file name
+    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+})
+
+$('#file2').on('change',function(){
+    //get the file name
+    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+})
+
+$('#file3').on('change',function(){
+    //get the file name
+    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+})
+
+$('#file4').on('change',function(){
+    //get the file name
+    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+})
+
+ 
