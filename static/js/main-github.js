@@ -2,7 +2,7 @@ $('#single').on('click', function(ev) {
     console.log('clicked')
     const formData = new FormData(document.getElementById('single-form'));
     console.log(formData)
-    fetch('http://180.176.5.132:5002/single', {
+    fetch('https://180.176.5.132:5003/single', {
         method: 'POST',
         body: formData
     }).then(response => response.blob())
@@ -17,7 +17,7 @@ $('#single').on('click', function(ev) {
 $('#grid').on('click', function(ev) {
     console.log('clicked')
     const formData = new FormData(document.getElementById('grid-form'));
-    fetch('http://180.176.5.132:5002/grid', {
+    fetch('https://180.176.5.132:5003/grid', {
         method: 'POST',
         body: formData
     }).then(response => response.blob())
