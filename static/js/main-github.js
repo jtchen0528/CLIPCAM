@@ -3,8 +3,7 @@ $('#single').on('click', function(ev) {
     console.log(formData)
     fetch('https://180.176.5.132:5003/single', {
         method: 'POST',
-        body: formData,
-        mode: 'no-cors'
+        body: formData
     }).then(response => response.blob())
     .then(imageBlob => {
         // Then create a local URL for that image and print it 
@@ -18,8 +17,7 @@ $('#grid').on('click', function(ev) {
     const formData = new FormData(document.getElementById('grid-form'));
     fetch('https://180.176.5.132:5003/grid', {
         method: 'POST',
-        body: formData,
-        mode: 'no-cors'
+        body: formData
     }).then(response => response.blob())
     .then(imageBlob => {
         // Then create a local URL for that image and print it 
