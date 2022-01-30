@@ -44,8 +44,6 @@ def single():
 
     final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img], GUIDING_TEXT, DISTILL_NUM, ATTACK)
 
-    final_img.save('img')
-
     file_object = io.BytesIO()
     final_img.save(file_object, 'PNG')
     file_object.seek(0)
