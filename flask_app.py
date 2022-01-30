@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, send_file
+from flask_cors import CORS
 import numpy as np
 import cv2
 from clipcam import api
@@ -10,6 +11,7 @@ import io
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
+CORS(app)
 
 @app.errorhandler(413)
 def too_large(e):
@@ -41,6 +43,8 @@ def single():
             return "Invalid image", 400
 
     final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img], GUIDING_TEXT, DISTILL_NUM, ATTACK)
+
+    final_img.save('img')
 
     file_object = io.BytesIO()
     final_img.save(file_object, 'PNG')
