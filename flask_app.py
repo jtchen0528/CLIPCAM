@@ -78,5 +78,11 @@ def grid():
 
     return send_file(file_object, mimetype='image/PNG')
 
+@app.route('/download')
+def downloadFile ():
+    #For windows you need to use drive name [ex: F:/Example.pdf]
+    path = "imgs/"
+    return send_file(path, as_attachment=True)
+
 if __name__ == 'main':
     app.run() #啟動伺服器
