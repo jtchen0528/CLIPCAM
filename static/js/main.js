@@ -2,6 +2,7 @@ $('#single').on('click', function(ev) {
     console.log('clicked')
     const formData = new FormData(document.getElementById('single-form'));
     console.log(ev.target)
+    $('#single')[0].disabled=true
     fetch('/single', {
         method: 'POST',
         body: formData
@@ -11,15 +12,18 @@ $('#single').on('click', function(ev) {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         console.log(imageObjectURL);
         document.querySelector("#result").src = imageObjectURL;
+        $('#single')[0].disabled=false
     }).catch(error => {
         $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
         console.error('There was an error!', error);
+        $('#single')[0].disabled=false
     });
 })
 
 $('#grid').on('click', function(ev) {
     console.log('clicked')
     const formData = new FormData(document.getElementById('grid-form'));
+    $('#grid')[0].disabled=true
     fetch('/grid', {
         method: 'POST',
         body: formData
@@ -29,9 +33,11 @@ $('#grid').on('click', function(ev) {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         console.log(imageObjectURL);
         document.querySelector("#result").src = imageObjectURL;
+        $('#grid')[0].disabled=false
     }).catch(error => {
         $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
         console.error('There was an error!', error);
+        $('#grid')[0].disabled=false
     });
 
 })

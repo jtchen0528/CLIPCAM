@@ -1,7 +1,7 @@
 $('#single').on('click', function(ev) {
     const formData = new FormData(document.getElementById('single-form'));
     console.log(ev.target)
-    ev.target.disabled = true
+    $('#single')[0].disabled=true
     fetch('https://180.176.5.132:5003/single', {
         method: 'POST',
         body: formData
@@ -11,17 +11,17 @@ $('#single').on('click', function(ev) {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         console.log(imageObjectURL);
         document.querySelector("#result").src = imageObjectURL;
-        ev.target.disabled = false
+        $('#single')[0].disabled=false
     }).catch(error => {
         $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
         console.error('There was an error!', error);
-        ev.target.disabled = false
+        $('#single')[0].disabled=false
     });
 })
 
 $('#grid').on('click', function(ev) {
     const formData = new FormData(document.getElementById('grid-form'));
-    ev.target.disabled = true
+    $('#grid')[0].disabled=true
     fetch('https://180.176.5.132:5003/grid', {
         method: 'POST',
         body: formData
@@ -31,11 +31,11 @@ $('#grid').on('click', function(ev) {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         console.log(imageObjectURL);
         document.querySelector("#result").src = imageObjectURL;
-        ev.target.disabled = false
+        $('#grid')[0].disabled=false
     }).catch(error => {
         $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
         console.error('There was an error!', error);
-        ev.target.disabled = false
+        $('#grid')[0].disabled=false
     });
 
 })
