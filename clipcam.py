@@ -58,6 +58,7 @@ def api(CLIP_MODEL_NAME, CAM_MODEL_NAME, images, sentence, DISTILL_NUM = 0, ATTA
         final_img = get_clipcam_single(cam, model, MASK_THRESHOLD, images[0], sentence, DISTILL_NUM = DISTILL_NUM, ATTACK = ATTACK)
     
     del cam
+    del model
     return final_img
 
 def get_mask_threshold(CLIP_MODEL_NAME):
