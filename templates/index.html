@@ -46,15 +46,15 @@
         <div class="container">
           <div class="row">
             <div class="col col-lg-6">
-              <label for="file">Input Image:</label>
+              <label for="file">Input Image:</label><br>
               <input type="file" name="file">
             </div>
             <div class="col col-lg-6">
-              <label for="text">Guiding Text:</label>
+              <label for="text">Guiding Text:</label><br>
               <input type="text" id="guiding_text" name="guiding_text">
             </div>
             <div class="col col-6">
-              <label for="clip_model_name">Choose CLIPCAM backbone:</label>
+              <label for="clip_model_name">Choose CLIPCAM backbone:</label><br>
               <select id="clip_model_name" name="clip_model_name">
                 <option value="ViT-B/16">ViT-B/16</option>
                 <option value="ViT-B/32">ViT-B/32</option>
@@ -63,7 +63,7 @@
               </select>
             </div>
             <div class="col col-6">
-              <label for="cam_model_name">Choose CAM Type:</label>
+              <label for="cam_model_name">Choose CAM Type:</label><br>
               <select id="cam_model_name" name="cam_model_name">
                 <option value="GradCAM">GradCAM</option>
                 <option value="GradCAMPlusPlus">GradCAM++</option>
@@ -77,9 +77,9 @@
           </div>
         </div>
         <p>
-          <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapse-single" role="button" aria-expanded="false" aria-controls="collapsesingle">
-            Link with href
-          </a>
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesingle" aria-expanded="false" aria-controls="collapsesingle">
+            Button with data-bs-target
+          </button>
         </p>
         <div class="collapse" id="collapsesingle">
           <div class="card card-body">
