@@ -10,6 +10,9 @@ $('#single').on('click', function(ev) {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         console.log(imageObjectURL);
         document.querySelector("#result").src = imageObjectURL;
+    }).catch(error => {
+        $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
+        console.error('There was an error!', error);
     });
 })
 
@@ -24,6 +27,9 @@ $('#grid').on('click', function(ev) {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         console.log(imageObjectURL);
         document.querySelector("#result").src = imageObjectURL;
+    }).catch(error => {
+        $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
+        console.error('There was an error!', error);
     });
 
 })
