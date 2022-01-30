@@ -1,7 +1,7 @@
 $('#single').on('click', function(ev) {
     console.log('clicked')
     const formData = new FormData(document.getElementById('single-form'));
-    console.log(formData)
+    console.log(ev.target)
     fetch('/single', {
         method: 'POST',
         body: formData
