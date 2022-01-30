@@ -16,34 +16,37 @@ GPU_ID = 'cpu'
 RESIZE = 1
 DISTILL_NUM = 0
 
-model_1, target_layer_1, reshape_transform_1 = getCLIP(
-    model_name='RN50', gpu_id=GPU_ID)
+# model_1, target_layer_1, reshape_transform_1 = getCLIP(
+#     model_name='RN50', gpu_id=GPU_ID)
 
-model_2, target_layer_2, reshape_transform_2 = getCLIP(
-    model_name='RN101', gpu_id=GPU_ID)
+# model_2, target_layer_2, reshape_transform_2 = getCLIP(
+#     model_name='RN101', gpu_id=GPU_ID)
 
-model_3, target_layer_3, reshape_transform_3 = getCLIP(
-    model_name='ViT-B/16', gpu_id=GPU_ID)
+# model_3, target_layer_3, reshape_transform_3 = getCLIP(
+#     model_name='ViT-B/16', gpu_id=GPU_ID)
 
-model_4, target_layer_4, reshape_transform_4 = getCLIP(
-    model_name='ViT-B/32', gpu_id=GPU_ID)
+# model_4, target_layer_4, reshape_transform_4 = getCLIP(
+#     model_name='ViT-B/32', gpu_id=GPU_ID)
 
-def get_CLIP_quick(CLIP_MODEL_NAME):
-    if CLIP_MODEL_NAME == 'RN50':
-        return model_1, target_layer_1, reshape_transform_1
-    elif CLIP_MODEL_NAME == 'RN101':
-        return model_2, target_layer_2, reshape_transform_2
-    elif CLIP_MODEL_NAME == 'ViT-B/16':
-        return model_3, target_layer_3, reshape_transform_3
-    elif CLIP_MODEL_NAME == 'ViT-B/32':
-        return model_4, target_layer_4, reshape_transform_4
+# def get_CLIP_quick(CLIP_MODEL_NAME):
+#     if CLIP_MODEL_NAME == 'RN50':
+#         return model_1, target_layer_1, reshape_transform_1
+#     elif CLIP_MODEL_NAME == 'RN101':
+#         return model_2, target_layer_2, reshape_transform_2
+#     elif CLIP_MODEL_NAME == 'ViT-B/16':
+#         return model_3, target_layer_3, reshape_transform_3
+#     elif CLIP_MODEL_NAME == 'ViT-B/32':
+#         return model_4, target_layer_4, reshape_transform_4
 
 
 ImageTransform = getImageTranform(resize=RESIZE)
 originalTransform = getImageTranform(resize=RESIZE, normalized=False)
 
 def api(CLIP_MODEL_NAME, CAM_MODEL_NAME, images, sentence, DISTILL_NUM = 0, ATTACK = None):
-    model, target_layer, reshape_transform = get_CLIP_quick(CLIP_MODEL_NAME)
+    model, target_layer, reshape_transform = getCLIP(
+        model_name=CLIP_MODEL_NAME, gpu_id=GPU_ID)
+
+
     cam = getCAM(model_name=CAM_MODEL_NAME, model=model, target_layer=target_layer,
                 gpu_id=GPU_ID, reshape_transform=reshape_transform)
 
