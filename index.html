@@ -39,6 +39,7 @@
         <div style="text-align: center;">
             <h1>This is the demo for CLIPCAM (ICASSP 2022)</h1>
             <h3>CLIPCAM: A Simple Baseline For Zero-shot Object and Action Localization</h3>
+            <h4>Download example OpenImageV6 and HICO-DET images from <a class="btn btn-lg btn-info" href="https://180.176.5.132:5003/download">here</a>. (40 images)</h4>
             <h5>If something is wrong (etc. CORS block, http issue, ... ), please go to my server <a
                     href="https://180.176.5.132:5003/">https://180.176.5.132:5003/</a>.</h5>
         </div>
@@ -72,6 +73,7 @@
                                             <input type="file" class="custom-file-input" id="file4" name="file4">
                                             <label class="custom-file-label" for="file4">Choose Image file 4</label>
                                         </div>
+                                        <small class="form-text text-muted">Please upload images no larger than about 1MB total to pass through browser API limit.</small>
                                     </div>
                                     <div class="mb-3 row">
                                         <label for="guiding_text" class="col-form-label">Guiding Text:</label>
@@ -104,6 +106,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 row">
+                                        <p>Additional settings:</p><br>
                                         <label for="attack" class="col-form-label">Choose Weather
                                             Attack:</label>
                                         <select class="custom-select" aria-label="attack" id="attack"
@@ -136,9 +139,9 @@
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="file" name="file">
                                             <label class="custom-file-label" for="file">Choose Input Image </label>
+                                            <small class="form-text text-muted">Please upload images no larger than about 1MB total to pass through browser API limit.</small>
                                         </div>
                                     </div>
-
                                     <div class="mb-3 row">
                                         <label for="guiding_text" class="col-form-label">Guiding Text:</label>
                                         <input type="text" class="form-control  col-sm-10" id="guiding_text"
@@ -170,6 +173,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 row">
+                                        <p>Additional settings:</p><br>
                                         <label for="attack" class="col-form-label">Choose Weather
                                             Attack:</label>
                                         <select class="custom-select" aria-label="attack" id="attack"

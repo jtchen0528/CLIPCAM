@@ -81,7 +81,7 @@ def grid():
 @app.route('/download')
 def downloadFile ():
     #For windows you need to use drive name [ex: F:/Example.pdf]
-    path = "imgs/"
+    path = "imgs/images.zip"
     return send_file(path, as_attachment=True)
 
 if __name__ == 'main':
