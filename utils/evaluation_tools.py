@@ -156,17 +156,18 @@ def getHeatMapOneBBox(mask, img, bboxes, text = None, size=224):
     final_img = background
 
     font = ImageFont.truetype("utils/FreeMono.ttf", 18)
+    font_small = ImageFont.truetype("utils/FreeMono.ttf", 12)
     draw = ImageDraw.Draw(final_img, 'RGBA')
     if size == 224:
         if text != None:
-            draw.text((50, 294), 'input: ' + text, (255, 255, 255),
-                    font=font, stroke_width=2, stroke_fill=(0, 0, 0))
+            draw.text((50, 294), 'input: ' + text, (0, 0, 0),
+                    font=font_small)
             draw.text((140, 40), 'CLIPCAM', (255, 255, 255),
                     font=font, stroke_width=2, stroke_fill=(0, 0, 0))
     elif size == 448:
         if text != None:
-            draw.text((80, 530), 'input: ' + text, (255, 255, 255),
-                    font=font, stroke_width=2, stroke_fill=(0, 0, 0))
+            draw.text((80, 530), 'input: ' + text, (0, 0, 0),
+                    font=font_small)
             draw.text((260, 50), 'CLIPCAM', (255, 255, 255),
                     font=font, stroke_width=2, stroke_fill=(0, 0, 0))
 
