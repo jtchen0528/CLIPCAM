@@ -2,7 +2,7 @@ $('#single').on('click', function(ev) {
     const formData = new FormData(document.getElementById('single-form'));
     console.log(ev.target)
     $('#single')[0].disabled=true
-    fetch('https://180.176.5.132:5003/single', {
+    fetch('https://cors-anywhere.herokuapp.com/https://180.176.5.132:5003/single', {
         method: 'POST',
         body: formData
     }).then(response => response.blob())
@@ -22,7 +22,7 @@ $('#single').on('click', function(ev) {
 $('#grid').on('click', function(ev) {
     const formData = new FormData(document.getElementById('grid-form'));
     $('#grid')[0].disabled=true
-    fetch('https://180.176.5.132:5003/grid', {
+    fetch('https://cors-anywhere.herokuapp.com/https://180.176.5.132:5003/grid', {
         method: 'POST',
         body: formData
     }).then(response => response.blob())
