@@ -1,0 +1,14 @@
+[2022-04-19 17:41:49 +0800] [97789] [INFO] Starting gunicorn 20.1.0
+[2022-04-19 17:41:49 +0800] [97789] [INFO] Listening at: http://0.0.0.0:5002 (97789)
+[2022-04-19 17:41:49 +0800] [97789] [INFO] Using worker: sync
+[2022-04-19 17:41:49 +0800] [97858] [INFO] Booting worker with pid: 97858
+[2022-04-19 17:41:49 +0800] [97859] [INFO] Booting worker with pid: 97859
+[2022-04-19 17:41:49 +0800] [97860] [INFO] Booting worker with pid: 97860
+[2022-04-19 17:42:07 +0800] [97789] [INFO] Handling signal: hup
+[2022-04-19 17:42:07 +0800] [97789] [INFO] Hang up: Master
+[2022-04-19 17:42:07 +0800] [97789] [WARNING] Worker with pid 97860 was terminated due to signal 1
+[2022-04-19 17:42:07 +0800] [97789] [WARNING] Worker with pid 97859 was terminated due to signal 1
+[2022-04-19 17:42:07 +0800] [97789] [WARNING] Worker with pid 97858 was terminated due to signal 1
+[2022-04-19 17:42:07 +0800] [97920] [INFO] Booting worker with pid: 97920
+[2022-04-19 17:42:07 +0800] [97919] [INFO] Booting worker with pid: 97919
+[2022-04-19 17:42:07 +0800] [97921] [INFO] Booting worker with pid: 97921
