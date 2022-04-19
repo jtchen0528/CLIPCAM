@@ -22,7 +22,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/check-server', methods=['POST'])
-def index():
+def check-server():
     return True
 
 @app.route('/single', methods=['POST'])
