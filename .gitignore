@@ -7,3 +7,4 @@ train_action_classifier.py
 checkpoints.zip
 .python-version
 *.whl
+lock.txt

@@ -38,44 +38,60 @@ $('#single').on('click', function(ev) {
     const formData = new FormData(document.getElementById('single-form'));
     console.log(ev.target)
     $('#single')[0].disabled=true
-    fetch(SERVER + 'single', {
-        method: 'POST',
-        mode: 'cors',
-        body: formData
-    }).then(response => response.blob())
-    .then(imageBlob => {
-        // Then create a local URL for that image and print it 
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-        console.log(imageObjectURL);
-        document.querySelector("#result").src = imageObjectURL;
-        $('#single')[0].disabled=false
-    }).catch(error => {
-        $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
-        console.error('There was an error!', error);
-        $('#single')[0].disabled=false
-    });
+    $.ajax(ajaxSetting('check-using', 'test')).done(function(response) {
+        if (response.message === 'currently not in use') {
+            fetch(SERVER + 'single', {
+                method: 'POST',
+                mode: 'cors',
+                body: formData
+            }).then(response => response.blob())
+            .then(imageBlob => {
+                // Then create a local URL for that image and print it 
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                console.log(imageObjectURL);
+                document.querySelector("#result").src = imageObjectURL;
+                $('#single')[0].disabled=false
+                $('#error')[0].innerHTML = ''
+            }).catch(error => {
+                $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
+                console.error('There was an error!', error);
+                $('#single')[0].disabled=false
+            });
+        } else {
+            $('#single')[0].disabled=false
+            $('#error')[0].innerHTML = 'Someone is running the demo elsewhere. Please wait for a few minutes. (The model is running on a Raspberry Pi, sorry for the inconvenience.)'
+        }
+    })
 })
 
 $('#grid').on('click', function(ev) {
     const formData = new FormData(document.getElementById('grid-form'));
     $('#grid')[0].disabled=true
-    fetch(SERVER + 'grid', {
-        method: 'POST',
-        mode: 'cors',
-        body: formData
-    }).then(response => response.blob())
-    .then(imageBlob => {
-        // Then create a local URL for that image and print it 
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-        console.log(imageObjectURL);
-        document.querySelector("#result").src = imageObjectURL;
-        $('#grid')[0].disabled=false
-    }).catch(error => {
-        $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
-        console.error('There was an error!', error);
-        $('#grid')[0].disabled=false
-    });
-
+    $.ajax(ajaxSetting('check-using', 'test')).done(function(response) {
+        if (response.message === 'currently not in use') {
+            fetch(SERVER + 'grid', {
+                method: 'POST',
+                mode: 'cors',
+                body: formData
+            }).then(response => response.blob())
+            .then(imageBlob => {
+                // Then create a local URL for that image and print it 
+                console.log(response)
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                console.log(imageObjectURL);
+                document.querySelector("#result").src = imageObjectURL;
+                $('#grid')[0].disabled=false
+                $('#error')[0].innerHTML = ''
+            }).catch(error => {
+                $('#error')[0].innerHTML = 'Something went wrong: ' + error + '.'
+                console.error('There was an error!', error);
+                $('#grid')[0].disabled=false
+            });
+        } else {
+            $('#single')[0].disabled=false
+            $('#error')[0].innerHTML = 'Someone is running the demo elsewhere. Please wait for a few minutes. (The model is running on a Raspberry Pi, sorry for the inconvenience.)'
+        }
+    })
 })
 
 $('#grid-toggle').on('click', function(ev) {

@@ -13,6 +13,10 @@ app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
 CORS(app)
 
+LOCKFILE = 'lock.txt'
+with open(LOCKFILE, 'w') as file:
+    file.write('False')
+
 @app.errorhandler(413)
 def too_large(e):
     return "File is too large", 413
@@ -28,6 +32,16 @@ def checkserver():
     response.headers.add('Access-Control-Allow-Credentials', True)
     return response
 
+@app.route('/check-using', methods=['POST'])
+def checkusing():
+    with open(LOCKFILE, 'r') as file:
+        CURRENTLY_NOT_USED = file.read() == 'False'
+    if CURRENTLY_NOT_USED:
+        response = jsonify({'message': 'currently not in use'})
+    else:
+        response = jsonify({'message': 'currently in use'})
+    return response
+
 @app.route('/single', methods=['POST'])
 def single():
     uploaded_file = request.files['file']
@@ -41,23 +55,35 @@ def single():
         ATTACK = None
     DISTILL_NUM = int(DISTILL_NUM)
 
-    img = Image.open(uploaded_file.stream)
+    with open(LOCKFILE, 'r') as file:
+        CURRENTLY_NOT_USED = file.read() == 'False'
+    
+    if CURRENTLY_NOT_USED:
 
-    filename = secure_filename(uploaded_file.filename)
-    if filename != '':
-        file_ext = os.path.splitext(filename)[1]
-        if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-            return "Invalid image", 400
+        with open(LOCKFILE, 'w') as file:
+            file.write('True')
 
-    final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img], GUIDING_TEXT, DISTILL_NUM, ATTACK)
+        img = Image.open(uploaded_file.stream)
 
-    file_object = io.BytesIO()
-    final_img.save(file_object, 'PNG')
-    file_object.seek(0)
+        filename = secure_filename(uploaded_file.filename)
+        if filename != '':
+            file_ext = os.path.splitext(filename)[1]
+            if file_ext not in app.config['UPLOAD_EXTENSIONS']:
+                return "Invalid image", 400
 
-    response = make_response(send_file(file_object, mimetype='image/PNG'))
-    # response.headers['Access-Control-Allow-Origin'] = '*'
-    # response.headers['Access-Control-Allow-Credentials'] = True
+        final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img], GUIDING_TEXT, DISTILL_NUM, ATTACK)
+
+        file_object = io.BytesIO()
+        final_img.save(file_object, 'PNG')
+        file_object.seek(0)
+
+        response = make_response(send_file(file_object, mimetype='image/PNG'))
+        # response.headers['Access-Control-Allow-Origin'] = '*'
+        # response.headers['Access-Control-Allow-Credentials'] = True
+        with open(LOCKFILE, 'w') as file:
+            file.write('False')
+    else:
+        response = jsonify({'message': 'currently in use'})
 
     return response
 
@@ -77,17 +103,29 @@ def grid():
         ATTACK = None
     DISTILL_NUM = int(DISTILL_NUM)
 
-    img_1 = Image.open(uploaded_file_1.stream)
-    img_2 = Image.open(uploaded_file_2.stream)
-    img_3 = Image.open(uploaded_file_3.stream)
-    img_4 = Image.open(uploaded_file_4.stream)
-    final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img_1, img_2, img_3, img_4], GUIDING_TEXT, DISTILL_NUM, ATTACK)
+    with open(LOCKFILE, 'r') as file:
+        CURRENTLY_NOT_USED = file.read() == 'False'
+    
+    if CURRENTLY_NOT_USED:
 
-    file_object = io.BytesIO()
-    final_img.save(file_object, 'PNG')
-    file_object.seek(0)
+        with open(LOCKFILE, 'w') as file:
+            file.write('True')
 
-    response = make_response(send_file(file_object, mimetype='image/PNG'))
+        img_1 = Image.open(uploaded_file_1.stream)
+        img_2 = Image.open(uploaded_file_2.stream)
+        img_3 = Image.open(uploaded_file_3.stream)
+        img_4 = Image.open(uploaded_file_4.stream)
+        final_img = api(CLIP_MODEL_NAME, CAM_MODEL_NAME, [img_1, img_2, img_3, img_4], GUIDING_TEXT, DISTILL_NUM, ATTACK)
+
+        file_object = io.BytesIO()
+        final_img.save(file_object, 'PNG')
+        file_object.seek(0)
+
+        response = make_response(send_file(file_object, mimetype='image/PNG'))
+        with open(LOCKFILE, 'w') as file:
+            file.write('False')
+    else:
+        response = jsonify({'message': 'currently in use'})
 
     return response
 
