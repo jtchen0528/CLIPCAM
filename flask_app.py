@@ -23,7 +23,7 @@ def index():
 
 @app.route('/check-server', methods=['POST'])
 def checkserver():
-    return True
+    return 'server is ok'
 
 @app.route('/single', methods=['POST'])
 def single():
