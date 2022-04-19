@@ -21,14 +21,17 @@ window.onload = function ()
 {
     const data = 'test';
     $.ajax(ajaxSetting('check-server', data)).done(function(response) {
-        console.log(response)
-        if (response.message === 'server is ok') {
-            console.log('ok')
+        if (response.message !== 'server is ok') {
+            document.getElementById('server-check-warning').style.display = 'block'
+            $('#single')[0].disabled = true;
+            $('#grid')[0].disabled = true;
         }
     }).catch(function(error) {
         console.log(error)
+        document.getElementById('server-check-warning').style.display = 'block'
+        $('#single')[0].disabled = true;
+        $('#grid')[0].disabled = true;
     })
-
 }
 
 $('#single').on('click', function(ev) {
@@ -75,6 +78,25 @@ $('#grid').on('click', function(ev) {
 
 })
 
+$('#grid-toggle').on('click', function(ev) {
+    if ($('#grid-toggle')[0].classList.value === 'btn btn-lg btn-secondary') {
+        $('#grid-toggle')[0].classList.add('active')
+        $('#single-toggle')[0].classList.remove('active')
+    } else {
+        $('#grid-toggle')[0].classList.remove('active')
+        $('#single-toggle')[0].classList.add('active')
+    }
+})
+
+$('#single-toggle').on('click', function(ev) {
+    if ($('#grid-toggle')[0].classList.value === 'btn btn-lg btn-secondary') {
+        $('#grid-toggle')[0].classList.add('active')
+        $('#single-toggle')[0].classList.remove('active')
+    } else {
+        $('#grid-toggle')[0].classList.remove('active')
+        $('#single-toggle')[0].classList.add('active')
+    }
+})
 
 function addAlert(content, type) {
     alertID = Date.now()
@@ -90,8 +112,6 @@ function addAlert(content, type) {
 
     timeout = setTimeout(() => { $(`.JobAdded`).alert('close') }, 3000);
 }
-
-
 
 $('#file').on('change',function(){
     //get the file name
