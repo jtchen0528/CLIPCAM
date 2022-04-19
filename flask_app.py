@@ -88,8 +88,6 @@ def grid():
     file_object.seek(0)
 
     response = make_response(send_file(file_object, mimetype='image/PNG'))
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Credentials'] = True
 
     return response
 

@@ -58,7 +58,7 @@ $('#grid').on('click', function(ev) {
     $('#grid')[0].disabled=true
     fetch(SERVER + 'grid', {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'cors',
         body: formData
     }).then(response => response.blob())
     .then(imageBlob => {
