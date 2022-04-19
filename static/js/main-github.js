@@ -1,10 +1,25 @@
+window.onload = function ()
+{
+    const data = 'test';
+    fetch('https://180.176.5.132:5003/check-server', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: data
+    }).then(response => {
+        // Then create a local URL for that image and print it 
+        console.log(response)
+    }).catch(error => {
+        console.error('There was an error!', error);
+    });
+}
+
 $('#single').on('click', function(ev) {
     const formData = new FormData(document.getElementById('single-form'));
     console.log(ev.target)
     $('#single')[0].disabled=true
     fetch('https://180.176.5.132:5003/single', {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         body: formData
     }).then(response => response.blob())
     .then(imageBlob => {
@@ -25,7 +40,7 @@ $('#grid').on('click', function(ev) {
     $('#grid')[0].disabled=true
     fetch('https://180.176.5.132:5003/grid', {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         body: formData
     }).then(response => response.blob())
     .then(imageBlob => {
