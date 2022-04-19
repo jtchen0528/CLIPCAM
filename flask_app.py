@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, send_file, jsonify
+from flask import Flask, request, render_template, redirect, url_for, send_file, jsonify, make_response
 from flask_cors import CORS
 import numpy as np
 import cv2
@@ -23,7 +23,6 @@ def index():
 
 @app.route('/check-server', methods=['POST'])
 def checkserver():
-    print('server ok')
     response = jsonify({'message': 'server is ok'})
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Credentials', True)
@@ -56,7 +55,11 @@ def single():
     final_img.save(file_object, 'PNG')
     file_object.seek(0)
 
-    return send_file(file_object, mimetype='image/PNG')
+    response = make_response(send_file(file_object, mimetype='image/PNG'))
+    # response.headers['Access-Control-Allow-Origin'] = '*'
+    # response.headers['Access-Control-Allow-Credentials'] = True
+
+    return response
 
 @app.route('/grid', methods=['POST'])
 def grid():
@@ -84,13 +87,22 @@ def grid():
     final_img.save(file_object, 'PNG')
     file_object.seek(0)
 
-    return send_file(file_object, mimetype='image/PNG')
+    response = make_response(send_file(file_object, mimetype='image/PNG'))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Credentials'] = True
+
+    return response
 
 @app.route('/download')
 def downloadFile ():
     #For windows you need to use drive name [ex: F:/Example.pdf]
     path = "imgs/images.zip"
-    return send_file(path, as_attachment=True)
+
+    response = make_response(send_file(path, as_attachment=True))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Credentials'] = True
+
+    return response
 
 if __name__ == 'main':
     app.run() #啟動伺服器

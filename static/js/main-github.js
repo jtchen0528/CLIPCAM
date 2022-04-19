@@ -35,9 +35,9 @@ $('#single').on('click', function(ev) {
     const formData = new FormData(document.getElementById('single-form'));
     console.log(ev.target)
     $('#single')[0].disabled=true
-    fetch('https://180.176.5.132:5003/single', {
+    fetch(SERVER + 'single', {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'cors',
         body: formData
     }).then(response => response.blob())
     .then(imageBlob => {
@@ -56,7 +56,7 @@ $('#single').on('click', function(ev) {
 $('#grid').on('click', function(ev) {
     const formData = new FormData(document.getElementById('grid-form'));
     $('#grid')[0].disabled=true
-    fetch('https://180.176.5.132:5003/grid', {
+    fetch(SERVER + 'grid', {
         method: 'POST',
         mode: 'no-cors',
         body: formData
