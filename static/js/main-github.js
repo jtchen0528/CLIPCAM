@@ -90,11 +90,11 @@ $('#grid-toggle').on('click', function(ev) {
 
 $('#single-toggle').on('click', function(ev) {
     if ($('#grid-toggle')[0].classList.value === 'btn btn-lg btn-secondary') {
-        $('#grid-toggle')[0].classList.add('active')
-        $('#single-toggle')[0].classList.remove('active')
-    } else {
         $('#grid-toggle')[0].classList.remove('active')
         $('#single-toggle')[0].classList.add('active')
+    } else {
+        $('#grid-toggle')[0].classList.add('active')
+        $('#single-toggle')[0].classList.remove('active')
     }
 })
 
