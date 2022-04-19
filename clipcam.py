@@ -49,14 +49,14 @@ def api(CLIP_MODEL_NAME, CAM_MODEL_NAME, images, sentence, DISTILL_NUM = 0, ATTA
 
     cam = getCAM(model_name=CAM_MODEL_NAME, model=model, target_layer=target_layer,
                 gpu_id=GPU_ID, reshape_transform=reshape_transform)
-
     MASK_THRESHOLD = get_mask_threshold(CLIP_MODEL_NAME)
 
     if len(images) == 4:
         final_img = get_clipcam_grid(cam, model, MASK_THRESHOLD, images, sentence, DISTILL_NUM = DISTILL_NUM, ATTACK = ATTACK)
     elif len(images) == 1:
         final_img = get_clipcam_single(cam, model, MASK_THRESHOLD, images[0], sentence, DISTILL_NUM = DISTILL_NUM, ATTACK = ATTACK)
-    
+    print('got img')
+
     del cam
     del model
     return final_img
@@ -83,15 +83,17 @@ def get_clipcam_single(clipcam, model, MASK_THRESHOLD, image, sentence = None, D
     image = image.unsqueeze(0)
     image = image.to(GPU_ID)
     orig_image = orig_image.to(GPU_ID)
-    
+
     if sentence == None:
         sentence = input(f"Please enter the query sentence: ")
 
     text  = clip_modified.tokenize(sentence)
     text = text.to(GPU_ID)
     text_features = model.encode_text(text)
+
     grayscale_cam = clipcam(input_tensor=image, text_tensor=text_features)[0, :]
     grayscale_cam_total = grayscale_cam[np.newaxis, :]
+
     if DISTILL_NUM > 0:
         for distill in range(DISTILL_NUM):
             distill_mask = np.where(grayscale_cam > 0.5, 0, 1)
@@ -127,7 +129,7 @@ def get_clipcam_grid(clipcam, model, MASK_THRESHOLD, images, sentence = None, DI
     image = image.unsqueeze(0)
     image = image.to(GPU_ID)
     orig_image = orig_image.to(GPU_ID)
-    
+
     if sentence == None:
         sentence = input(f"Please enter the query sentence: ")
 
@@ -160,3 +162,7 @@ def get_clipcam_grid(clipcam, model, MASK_THRESHOLD, images, sentence = None, DI
 
     final_img = getHeatMapOneBBox(grayscale_cam, orig_image.permute(1, 2, 0).cpu().numpy(), total_bboxes, sentence, size=448)
     return final_img
+
+# img = Image.open('imgs/airplane.jpg')
+# final_img = api('ViT-B/16', 'GradCAM', [img], 'an airplane', 0, None)
+# final_img.save('test.png')
