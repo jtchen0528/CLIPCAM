@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, send_file
+from flask import Flask, request, render_template, redirect, url_for, send_file, jsonify
 from flask_cors import CORS
 import numpy as np
 import cv2
@@ -23,7 +23,11 @@ def index():
 
 @app.route('/check-server', methods=['POST'])
 def checkserver():
-    return 'server is ok'
+    print('server ok')
+    response = jsonify({'message': 'server is ok'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Credentials', True)
+    return response
 
 @app.route('/single', methods=['POST'])
 def single():

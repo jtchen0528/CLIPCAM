@@ -1,16 +1,34 @@
+SERVER = 'https://180.176.5.132:5003/'
+
+function ajaxSetting(api, data) {
+    setting = {
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER + api,
+        "method": "POST",
+        "headers": {
+            "content-type": "application/json",
+            "cache-control": "no-cache",
+            "postman-token": "e81e0d1c-cde1-b166-2025-1d8726e91517"
+        },
+        "processData": false,
+        "data": JSON.stringify(data)
+    }
+    return setting
+}
+
 window.onload = function ()
 {
     const data = 'test';
-    fetch('https://180.176.5.132:5003/check-server', {
-        method: 'POST',
-        mode: 'no-cors',
-        body: data
-    }).then(response => {
-        // Then create a local URL for that image and print it 
+    $.ajax(ajaxSetting('check-server', data)).done(function(response) {
         console.log(response)
-    }).catch(error => {
-        console.error('There was an error!', error);
-    });
+        if (response.message === 'server is ok') {
+            console.log('ok')
+        }
+    }).catch(function(error) {
+        console.log(error)
+    })
+
 }
 
 $('#single').on('click', function(ev) {
