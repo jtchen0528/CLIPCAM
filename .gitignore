@@ -8,3 +8,4 @@ checkpoints.zip
 .python-version
 *.whl
 lock.txt
+nohup.out
