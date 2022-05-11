@@ -88,7 +88,7 @@ $('#grid').on('click', function(ev) {
                 $('#grid')[0].disabled=false
             });
         } else {
-            $('#single')[0].disabled=false
+            $('#grid')[0].disabled=false
             $('#error')[0].innerHTML = 'Someone is running the demo elsewhere. Please wait for a few minutes. (The model is running on a Raspberry Pi, sorry for the inconvenience.)'
         }
     })
